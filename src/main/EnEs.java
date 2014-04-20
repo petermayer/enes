@@ -174,9 +174,9 @@ public class EnEs {
 			return new DirikEstimatorDep();
 		} else if ( methodArg.equalsIgnoreCase("gp_dirik_indep" ) ) {
 			return new DirikEstimatorIndep();
-		} else if ( methodArg.equalsIgnoreCase("gp_chiasson_spatial" ) ) {
+		} /*else if ( methodArg.equalsIgnoreCase("gp_chiasson_spatial" ) ) {
 			return new ChiassonEstimator();
-		} else return null;
+		} */else return null;
 		
 	}
 	
