@@ -70,11 +70,9 @@ public class ShayEstimator extends EntropyEstimatorI {
 	 * 7:  number of upper case letters
 	 * 8:  upper case letter placement
 	 * 9:  different upper case letters
-	 * 10: number of lower case letters
-	 * 11: lower case letter placement 
-	 * 12: different lower case letters
+	 * 10: different lower case letters
 	 */
-	private double[] results=new double[13];
+	private double[] results=new double[11];
 	
 	@Override
 	public double calculateEntropy(List<String> passwords) {
@@ -100,9 +98,7 @@ public class ShayEstimator extends EntropyEstimatorI {
 		results[9]=this.getInTypeEntropy(passwords, new UpperCaseLetterTypeHandler());
 		
 		//5. Entropy in lower case letters
-		results[10]=this.getNumberEntropy(passwords, maxLength, new LowerCaseLetterTypeHandler());
-		results[11]=this.getPlacementEntropy(passwords, maxLength, new LowerCaseLetterTypeHandler());
-		results[12]=this.getInTypeEntropy(passwords, new LowerCaseLetterTypeHandler());
+		results[10]=this.getInTypeEntropy(passwords, new LowerCaseLetterTypeHandler());
 		
 		this.calculated=true;
 		return EntropyEstimatorI.getTotal(results);
@@ -268,13 +264,9 @@ public class ShayEstimator extends EntropyEstimatorI {
 		
 		outWriter.write("-------------------------------\n");
 		
-		outWriter.write("Lowercase Amount: "+results[10]+"\n");
+		outWriter.write("Lowercase Type: "+results[10]+"\n");
 		
-		outWriter.write("Lowercase Placement: "+results[11]+"\n");
-		
-		outWriter.write("Lowercase Type: "+results[12]+"\n");
-		
-		outWriter.write("Lowercase Total: "+(results[10]+results[11]+results[12])+"\n");
+		outWriter.write("Lowercase Total: "+results[10]+"\n");
 		
 		outWriter.write("-------------------------------\n");
 		
