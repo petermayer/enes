@@ -145,8 +145,8 @@ class DirikEstimator {
 				if (dependent) depbuckets[x][y]++;
 			}
 			
-			this.results[i]=EntropyEstimatorI.get2dimEntropy(buckets);
-			if (dependent) this.results[this.maxLength+i]=EntropyEstimatorI.get2dimEntropy(depbuckets);
+			this.results[i]=EntropyEstimatorI.getEntropy(this.convertToOneDim(buckets));
+			if (dependent) this.results[this.maxLength+i]=EntropyEstimatorI.getEntropy(this.convertToOneDim(depbuckets));
 			
 		}
 		
@@ -199,8 +199,6 @@ class DirikEstimator {
 			System.err.println("Could not write to target output.");
 		}
 		
-		
-		
 	}
 	
 	/**
@@ -218,6 +216,29 @@ class DirikEstimator {
 		}
 		
 		return b;
+	}
+	
+	/**
+	 * Converts a two-dimensional array into a one-dimensional array. The
+	 * new two dimensional array is constructed by appending the arrays 
+	 * from the original one, first to last.
+	 * 
+	 * @param array The two-dimensional array
+	 * @return The new one-dimensional array
+	 */
+	private int[] convertToOneDim(int[][] array) {
+		
+		int[] newArray=new int[array.length*array[0].length];
+		
+		
+		for ( int i=0; i<array.length; i++ ) {
+			for ( int j=0; j<array[0].length; j++ ) {
+				newArray[i*array[0].length+j]=array[i][j];
+			}
+		}
+		
+		return newArray;
+		
 	}
 
 }
