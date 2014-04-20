@@ -32,7 +32,11 @@ import estimators.EntropyEstimatorI;
  * each type of character (digits, symbols, upper case letters, lower
  * case letters) the entropy originating from the number of characters
  * of that type, the placement of the characters in the password and the
- * occurrence of each possible character of the type.
+ * occurrence of each possible character of the type. For lower case 
+ * letters, the entropy originating from the number of occurrences and the
+ * placement is skipped. This information is known deterministically
+ * once the other sources of entropy have been processed; it
+ * adds 0 bits of entropy.  
  * <br>
  * The password file is expected to be UTF-8 encoded and to contain one
  * password in each line. No additional lines should be placed at the end
