@@ -171,11 +171,11 @@ public final class EnEs {
 	 */
 	private static MetricEstimatorI<?> checkMethod(String methodArg) {
 		
-		if ( methodArg.equalsIgnoreCase("text_shay" ) ) {
+		if ( methodArg.equalsIgnoreCase("text_entropy" ) ) {
 			return new TextEntropyEstimator();
-		} else if ( methodArg.equalsIgnoreCase("gp_dirik_dep" ) ) {
+		} else if ( methodArg.equalsIgnoreCase("gp_click_entropy_dep" ) ) {
 			return new ClickEntropyEstimatorDep();
-		} else if ( methodArg.equalsIgnoreCase("gp_dirik_indep" ) ) {
+		} else if ( methodArg.equalsIgnoreCase("gp_click_entropy_indep" ) ) {
 			return new ClickEntropyEstimatorIndep();
 		} else if ( methodArg.equalsIgnoreCase("gp_click_guesswork" ) ) {
 			return new AlphaGuessworkClickEstimator();
@@ -191,9 +191,9 @@ public final class EnEs {
 	private static void printHelp() {
 		System.out.println("USAGE: java -jar enes.jar -m <estimation method> -i <password file> [-o <output file>] [-v]");
 		System.out.println("-m Estimation method to use. Available stable methods:");
-		System.out.println("   * text_shay");
-		System.out.println("   * gp_dirik_dep");
-		System.out.println("   * gp_dirik_indep");
+		System.out.println("   * text_entropy");
+		System.out.println("   * gp_click_entropy_dep");
+		System.out.println("   * gp_click_entropy_indep");
 		System.out.println("-i Path to password file");
 		System.out.println("-o Path to output file (optional)");
 		System.out.println("-v Enable verbose output (optional, default: print overall entropy estimate only)");
