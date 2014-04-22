@@ -14,39 +14,34 @@
  * This software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
  * CONDITIONS OF ANY KIND, either express or implied.
  *=========================================================================*/
-package estimators.click.spatial;
-
-import java.io.IOException;
-import java.io.Writer;
-import java.util.List;
-
-import main.PasswordType;
-import estimators.MetricEstimatorI;
-import estimators.click.ClickPassword;
+package main;
 
 /**
- * 
+ * This enum contains all the different types of passwords, EnEs can handle.
+ * These types are used to select parsers during run-time and determine
+ * compatibility with the user-specified estimator.
  * 
  * @author Peter Mayer | peter.mayer@cased.de
  */
-public class ChiassonEstimator extends MetricEstimatorI<ClickPassword> {
-
-	@Override
-	public double calculateMetric(List<ClickPassword> passwords, int[] parameters) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void printResult(Writer outWriter) throws IOException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public PasswordType getPasswordType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+public enum PasswordType {
+	
+	/*
+	 * The test password type
+	 */
+	TEXT,
+	
+	/*
+	 * The type for graphical click-based passwords (as used in e.g. PassPoints)
+	 */
+	GRAPHICAL_CLICK,
+	
+	/*
+	 * The type for recognition-based graphical passwords which are semantically grouped (as used in e.g. Passfaces)
+	 */
+	GRAPHICAL_COGNOMETRIC_GROUP,
+	
+	/*
+	 * This type is used by the parser in case a password file can not be parsed correctly
+	 */
+	MALFORMATTED
 }

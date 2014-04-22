@@ -20,7 +20,9 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 
-import estimators.EntropyEstimatorI;
+import main.PasswordType;
+import estimators.MetricEstimatorI;
+import estimators.click.ClickPassword;
 /**
  * This class provides a wrapper for the estimation method implemented in DirikEstimator
  * for passwords with independent click-points (i.e. created on different images). Such
@@ -30,7 +32,7 @@ import estimators.EntropyEstimatorI;
  * @see DirikEstimator
  * @see DirikEstimatorDep
  */
-public class DirikEstimatorIndep extends EntropyEstimatorI {
+public class DirikEstimatorIndep extends MetricEstimatorI<ClickPassword> {
 
 	/**
 	 * The actual estimator all calculations are delegated to
@@ -38,13 +40,18 @@ public class DirikEstimatorIndep extends EntropyEstimatorI {
 	private DirikEstimator estimator=new DirikEstimator();
 	
 	@Override
-	public double calculateEntropy(List<String> passwords) {
-		return this.estimator.calculateEntropy(passwords, false);
+	public double calculateMetric(List<ClickPassword> passwords, int[] parameters) {
+		return this.estimator.calculateEstimate(passwords, parameters, false);
 	}
 
 	@Override
 	public void printResult(Writer outWriter) throws IOException {
 		this.estimator.printResult(outWriter, false);
+	}
+
+	@Override
+	public PasswordType getPasswordType() {
+		return PasswordType.GRAPHICAL_CLICK;
 	}
 
 }

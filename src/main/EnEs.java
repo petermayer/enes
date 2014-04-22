@@ -16,28 +16,25 @@
  *=========================================================================*/
 package main;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
 
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
-import estimators.EntropyEstimatorI;
+import parsing.PasswordFileParser;
+import estimators.MetricEstimatorI;
 import estimators.click.dirik.DirikEstimatorDep;
 import estimators.click.dirik.DirikEstimatorIndep;
-import estimators.click.spatial.ChiassonEstimator;
 import estimators.text.shay.ShayEstimator;
 
 /**
- * This application provides multiple methods to analyze the entropy of password sets
- * of different types. Entropy estimates can be obtained for text passwords and graphical
- * click-based passwords. The following methods are available:
+ * This application provides multiple methods to analyze the password space 
+ * defined through password sets of different types. Different metrics can be
+ * estimated for text passwords and graphical click-based passwords. Currently,
+ * the following methods are available:
  * 
  * <ul>
  * <li>Text methods
@@ -67,7 +64,7 @@ import estimators.text.shay.ShayEstimator;
  * 
  * @author Peter Mayer | peter.mayer@cased.de
  */
-public class EnEs {
+public final class EnEs {
 	
 	/**
 	 * There should never be an instance of this class
@@ -77,8 +74,9 @@ public class EnEs {
 	/**
 	 * The main function, processing the arguments and starting the entropy calculation 
 	 * 
-	 * @param args
+	 * @param args The arguments as outlined in function printHelp 
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" }) // Unfortunately sees problems with the generics in the parser, where there are none
 	public static void main(String[] args) throws IOException {
 		
 		/*
@@ -103,25 +101,34 @@ public class EnEs {
 
 		
 		/*
-		 * 2. Check whether valid method
+		 * 2. Check whether valid estimation method
 		 */
-		EntropyEstimatorI estimator=EnEs.checkMethod((String)os.valueOf("m"));
+		MetricEstimatorI estimator=EnEs.checkMethod((String)os.valueOf("m"));
 		if ( estimator == null ) {
 			System.err.println("Invalid estimation method: "+os.valueOf("m"));
 			System.exit(1);
 		}
 		
 		/*
-		 * 3. Parse password file
+		 * 3. Read password file, this actually takes place in the PasswordFileParser
+		 * class. The fourth step is included in the try-block for simplicity's sake.
 		 */
-		ArrayList<String> pwds=new ArrayList<String>();
+		PasswordFileParser parser;
+		double estimate=-1;
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream((String)os.valueOf("i")),"UTF8"));
-			String line;
-			while ( (line=reader.readLine()) != null ) {
-				pwds.add(line);
+			parser=new PasswordFileParser((String)os.valueOf("i"));
+			
+			/*
+			 * 4. Check whether the parsed file is sensible for the chosen estimator 
+			 * and if yes then calculate estimate
+			 */
+			if ( !parser.setPasswordType(estimator.getPasswordType()) ) {
+				System.err.println("Malformatted password file or incompatible estimator choice!");
+				System.exit(1);
 			}
-			reader.close();
+			estimate=estimator.calculateMetric(parser.getPasswords(),parser.getParameters());
+			
+		//This catch-blocks are necessary due to the operations in the constructor of PasswordFileParser	
 		} catch (FileNotFoundException e) {
 			System.err.println("File not found: "+os.valueOf("i"));
 			System.exit(1);
@@ -131,14 +138,13 @@ public class EnEs {
 		}
 		
 		/*
-		 * 4. Calculate entropy estimate
-		 */
-		double estimate=estimator.calculateEntropy(pwds);
-		
-		
-		/*
 		 * 5. Create output
 		 */
+		//This should never apply, but for safety we check whether the estimation actually happened
+		if ( estimate == -1 ) {
+			System.err.println("Whoops, well this is embarrassing... It seems you managed to outwit the parser and the estimator! Please contact the developer with information on how you managed to do this.");
+			System.exit(1);
+		}
 		OutputStreamWriter writer=new OutputStreamWriter(System.out);
 		if ( os.has("o") ) {
 			if ( !os.hasArgument("o") ) System.err.println("No output file specified: falling back to System.out");
@@ -166,7 +172,7 @@ public class EnEs {
 	 * @param methodArg The specified method
 	 * @return If method is valid: estimator object; if not: null
 	 */
-	private static EntropyEstimatorI checkMethod(String methodArg) {
+	private static MetricEstimatorI<?> checkMethod(String methodArg) {
 		
 		if ( methodArg.equalsIgnoreCase("text_shay" ) ) {
 			return new ShayEstimator();

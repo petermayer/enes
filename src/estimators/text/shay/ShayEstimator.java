@@ -21,9 +21,13 @@ import java.io.Writer;
 import java.util.Hashtable;
 import java.util.List;
 
+import main.PasswordType;
+
 import org.apache.commons.lang3.ArrayUtils;
 
-import estimators.EntropyEstimatorI;
+import estimators.CommonHelper;
+import estimators.MetricEstimatorI;
+import estimators.ShannonEntropyHelper;
 
 /**
  * This class provides an estimator for the entropy among a password set
@@ -54,7 +58,7 @@ import estimators.EntropyEstimatorI;
  * @author Peter Mayer | peter.mayer@cased.de
  *
  */
-public class ShayEstimator extends EntropyEstimatorI {
+public class ShayEstimator extends MetricEstimatorI<String> {
 
 	/**
 	 * Whether the calculation has finished
@@ -79,7 +83,7 @@ public class ShayEstimator extends EntropyEstimatorI {
 	private double[] results=new double[11];
 	
 	@Override
-	public double calculateEntropy(List<String> passwords) {
+	public double calculateMetric(List<String> passwords, int[] parameters) {
 		
 		int maxLength=this.getMaxLength(passwords);
 		
@@ -105,7 +109,7 @@ public class ShayEstimator extends EntropyEstimatorI {
 		results[10]=this.getInTypeEntropy(passwords, new LowerCaseLetterTypeHandler());
 		
 		this.calculated=true;
-		return EntropyEstimatorI.getTotal(results);
+		return CommonHelper.getTotal(results);
 	}
 	
 	/**
@@ -121,7 +125,7 @@ public class ShayEstimator extends EntropyEstimatorI {
 		
 		for (String pwd : pwds)	lengths[pwd.length()]++;
 		
-		return EntropyEstimatorI.getEntropy(lengths);
+		return ShannonEntropyHelper.getEntropy(lengths);
 	}
 	
 	/**
@@ -163,7 +167,7 @@ public class ShayEstimator extends EntropyEstimatorI {
 			number[pwdNumber]++;
 		}
 		
-		return EntropyEstimatorI.getEntropy(number);
+		return ShannonEntropyHelper.getEntropy(number);
 	}
 	
 	/**
@@ -188,7 +192,7 @@ public class ShayEstimator extends EntropyEstimatorI {
 			
 		}
 		
-		return EntropyEstimatorI.getEntropy(placements);
+		return ShannonEntropyHelper.getEntropy(placements);
 	}
 	
 	/**
@@ -222,7 +226,7 @@ public class ShayEstimator extends EntropyEstimatorI {
 			}
 		}
 		
-		return EntropyEstimatorI.getEntropy(ArrayUtils.toPrimitive(inTypeAmounts.values().toArray((new Integer[1]))));
+		return ShannonEntropyHelper.getEntropy(ArrayUtils.toPrimitive(inTypeAmounts.values().toArray((new Integer[1]))));
 		
 	}
 
@@ -274,7 +278,7 @@ public class ShayEstimator extends EntropyEstimatorI {
 		
 		outWriter.write("-------------------------------\n");
 		
-		outWriter.write("Entropy Total: "+EntropyEstimatorI.getTotal(results)+"\n");
+		outWriter.write("Entropy Total: "+CommonHelper.getTotal(results)+"\n");
 		
 		outWriter.close();
 		
@@ -335,6 +339,11 @@ public class ShayEstimator extends EntropyEstimatorI {
 			return Character.isLowerCase(c);
 		}
 		
+	}
+
+	@Override
+	public PasswordType getPasswordType() {
+		return PasswordType.TEXT;
 	}
 
 }

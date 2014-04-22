@@ -20,7 +20,8 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 
-import estimators.EntropyEstimatorI;
+import estimators.CommonHelper;
+import estimators.ShannonEntropyHelper;
 import estimators.click.ClickPassword;
 
 /**
@@ -32,14 +33,6 @@ import estimators.click.ClickPassword;
  * is not intended to be used directly. Instead the classes DirikEstimatorDep
  * and DirikEstimatorIndep provide the public interface for dependent and
  * independent click-point data respectively.
- * <br>
- * The password file is expected to be UTF-8 encoded and to contain one
- * password in each line, where the format is: "x1,y2;x2,y2;...;xn,yn" 
- * (without quotation marks) for n click-points. Currently only integer 
- * values are supported for the coordinates. The first line has to contain
- * three values, the maximum value for the x-coordinates, the maximum value
- * for the y-coordinates and the tolerance margin, where the format is:
- * "xmax,ymax,tolerance" (without quotation marks).
  * 
  * <table border="0">
  * <tr>
@@ -58,7 +51,7 @@ class DirikEstimator {
 	private boolean calculated=false;
 	
 	/**
-	 * The parameters as read from the password file.
+	 * The parameters as provided from the parser
 	 * 
 	 *  0: x-max
 	 *  1: y-max
@@ -95,31 +88,17 @@ class DirikEstimator {
 	 * @param dependent Whether the click-points are dependent
 	 * @return Entropy estimate
 	 */
-	public double calculateEntropy(List<String> passwords,final boolean dependent) {
+	public double calculateEstimate(List<ClickPassword> passwords, int[] parameters, final boolean dependent) {
 		
 		/*
-		 * 1. Create new password list
+		 * 1. Make the supplied parameters available for further processing
 		 */
-		ClickPassword[] pwds=new ClickPassword[passwords.size()-1];
+		this.parameters=parameters;
 		
 		/*
-		 * 2. Parse parameters
+		 * 2. Get some more configuration data
 		 */
-		this.parameters=this.arrayStringToInt(passwords.get(0).split(","));
-		passwords.remove(0);
-		
-		/*
-		 * 3. Parse passwords
-		 */
-		for ( int i=passwords.size()-1; i>=0; i-- ) {
-			pwds[i]=this.parsePassword(passwords.get(i));
-			passwords.remove(i);
-		}
-		
-		/*
-		 * 4. Some more configurations
-		 */
-		this.maxLength=ClickPassword.getMaxLength(pwds);
+		this.maxLength=ClickPassword.getMaxLength(passwords);
 		if (!dependent) this.results=new double[this.maxLength];
 		else this.results=new double[this.maxLength*2];
 		
@@ -128,6 +107,8 @@ class DirikEstimator {
 		 */
 		int[][] buckets=new int[0][0];
 		int[][] depbuckets=new int[0][0];
+		
+		// The depbuckets need only be instantiated once as all cps are congregated in them
 		if (dependent) depbuckets=new int[(int)Math.ceil((double)this.parameters[0]/this.parameters[2])][(int)Math.ceil((double)this.parameters[1]/this.parameters[2])];
 		
 		/*
@@ -135,9 +116,10 @@ class DirikEstimator {
 		 */
 		for ( int i=0; i<this.maxLength; i++ ) {
 			
+			//New bucktes for each click point
 			buckets=new int[(int)Math.ceil((double)this.parameters[0]/this.parameters[2])][(int)Math.ceil((double)this.parameters[1]/this.parameters[2])];
 			
-			for ( ClickPassword cpw : pwds ) {
+			for ( ClickPassword cpw : passwords ) {
 				int x=(int)Math.ceil((double)cpw.getClickPoint(i)[0]/this.parameters[2]);
 				int y=(int)Math.ceil((double)cpw.getClickPoint(i)[1]/this.parameters[2]);
 				
@@ -145,33 +127,15 @@ class DirikEstimator {
 				if (dependent) depbuckets[x][y]++;
 			}
 			
-			this.results[i]=EntropyEstimatorI.getEntropy(this.convertToOneDim(buckets));
-			if (dependent) this.results[this.maxLength+i]=EntropyEstimatorI.getEntropy(this.convertToOneDim(depbuckets));
+			this.results[i]=ShannonEntropyHelper.getEntropy(this.convertToOneDim(buckets));
+			if (dependent) this.results[this.maxLength+i]=ShannonEntropyHelper.getEntropy(this.convertToOneDim(depbuckets));
 			
 		}
 		
 		this.calculated=true;
 		
 		if (dependent) return this.results[this.results.length-1];
-		else return EntropyEstimatorI.getTotal(this.results);
-	}
-
-	/**
-	 * Parses one line of the password file to extract the password information
-	 * 
-	 * @param pwd The password as specified in the file
-	 * @return The password in a representation as needed for the entropy estimation
-	 */
-	private ClickPassword parsePassword(String pwd) {
-		
-		ClickPassword cpw=new ClickPassword();
-		
-		for ( String cp : pwd.split(";") ) {
-			cpw.addClickPoint(this.arrayStringToInt(cp.split(",")));
-		}
-		
-		return cpw;
-		
+		else return CommonHelper.getTotal(this.results);
 	}
 
 	/**
@@ -202,23 +166,6 @@ class DirikEstimator {
 			System.err.println("Could not write to target output.");
 		}
 		
-	}
-	
-	/**
-	 * Converts an array of Strings into an array of Integer primitives
-	 * 
-	 * @param a The array to convert
-	 * @return The new array with the converted values
-	 */
-	private int[] arrayStringToInt(String[] a) {
-		
-		int[] b=new int[a.length];
-		
-		for ( int i=0; i<a.length; i++ ) {
-			b[i]=Integer.parseInt(a[i]);
-		}
-		
-		return b;
 	}
 	
 	/**

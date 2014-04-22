@@ -17,6 +17,7 @@
 package estimators.click;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A little wrapper class for the click-points belonging to one password. It is
@@ -75,7 +76,7 @@ public class ClickPassword {
 	 * @param pwds The passwords
 	 * @return The maximum length
 	 */
-	public static int getMaxLength(ClickPassword[] pwds) {
+	public static int getMaxLength(List<ClickPassword> pwds) {
 		int maxLen=0;
 		
 		for (ClickPassword pwd : pwds) {
