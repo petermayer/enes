@@ -29,7 +29,7 @@ import estimators.click.ClickPassword;
  * 
  * @author Peter Mayer | peter.mayer@cased.de
  */
-public class ChiassonEstimator extends MetricEstimatorI<ClickPassword> {
+public class ClickSpatialEstimator extends MetricEstimatorI<ClickPassword> {
 
 	@Override
 	public Object calculateMetric(List<ClickPassword> passwords, int[] parameters) {

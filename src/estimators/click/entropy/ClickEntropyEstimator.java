@@ -14,7 +14,7 @@
  * This software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
  * CONDITIONS OF ANY KIND, either express or implied.
  *=========================================================================*/
-package estimators.click.dirik;
+package estimators.click.entropy;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -43,7 +43,7 @@ import estimators.click.ClickPassword;
  * 
  * @author Peter Mayer | peter.mayer@cased.de
  */
-class DirikEstimator {
+class ClickEntropyEstimator {
 
 	/**
 	 * Whether the calculation has finished

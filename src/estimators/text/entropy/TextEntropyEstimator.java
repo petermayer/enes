@@ -14,7 +14,7 @@
  * This software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
  * CONDITIONS OF ANY KIND, either express or implied.
  *=========================================================================*/
-package estimators.text.shay;
+package estimators.text.entropy;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -58,7 +58,7 @@ import estimators.ShannonEntropyHelper;
  * @author Peter Mayer | peter.mayer@cased.de
  *
  */
-public class ShayEstimator extends MetricEstimatorI<String> {
+public class TextEntropyEstimator extends MetricEstimatorI<String> {
 
 	/**
 	 * Whether the calculation has finished

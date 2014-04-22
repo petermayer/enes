@@ -14,7 +14,7 @@
  * This software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
  * CONDITIONS OF ANY KIND, either express or implied.
  *=========================================================================*/
-package estimators.click.dirik;
+package estimators.click.entropy;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -29,15 +29,15 @@ import estimators.click.ClickPassword;
  * passwords are used for example in the PassPoints system.
  * 
  * @author Peter Mayer | peter.mayer@cased.de
- * @see DirikEstimator
- * @see DirikEstimatorIndep
+ * @see ClickEntropyEstimator
+ * @see ClickEntropyEstimatorIndep
  */
-public class DirikEstimatorDep extends MetricEstimatorI<ClickPassword> {
+public class ClickEntropyEstimatorDep extends MetricEstimatorI<ClickPassword> {
 
 	/**
 	 * The actual estimator all calculations are delegated to
 	 */
-	private DirikEstimator estimator=new DirikEstimator();
+	private ClickEntropyEstimator estimator=new ClickEntropyEstimator();
 	
 	@Override
 	public Object calculateMetric(List<ClickPassword> passwords, int[] parameters) {
