@@ -20,14 +20,14 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 
+import main.PasswordType;
+
 /**
- * Interface for the different entropy estimators. This class also contains static
- * functions for use with all estimators, such as functions to calculate Shanon 
- * entropy values from one-dimensional and two-dimensional frequency arrays.
+ * Interface for the different metrics' estimators.
  * 
  * @author Peter Mayer | peter.mayer@cased.de
  */
-public abstract class EntropyEstimatorI {
+public abstract class MetricEstimatorI<E> {
 	
 	/**
 	 * Calculates an entropy estimate for the specified passwords
@@ -35,7 +35,7 @@ public abstract class EntropyEstimatorI {
 	 * @param passwords The passwords to consider
 	 * @return The entropy estimate
 	 */
-	public abstract double calculateEntropy(List<String> passwords);
+	public abstract double calculateMetric(List<E> passwords, int[] parameters);
 	
 	/**
 	 * Prints the result of the entropy estimation
@@ -45,83 +45,10 @@ public abstract class EntropyEstimatorI {
 	public abstract void printResult(Writer outWriter) throws IOException;
 	
 	/**
-	 * Calculates the total sum of all elements in an array 
+	 * Returns the type of password this estimator is designed for.
 	 * 
-	 * @param a The array
-	 * @return Sum of all elements in a
+	 * @return The PasswordType, this estimator is designed for
 	 */
-	public static int getTotal(int[] a) {
-		int total=0;
-		
-		for (int i : a) {
-			total += i;
-		}
-		
-		return total;
-	}
+	public abstract PasswordType getPasswordType();
 	
-	/**
-	 * Calculates the total sum of all elements in an array 
-	 * 
-	 * @param a The array
-	 * @return Sum of all elements in a
-	 */
-	public static double getTotal(double[] a) {
-		double total=0;
-		
-		for (double i : a) {
-			total += i;
-		}
-		
-		return total;
-	}
-
-	/**
-	 * Calculates log2(x)
-	 * 
-	 * @param x x
-	 * @return log2(x)
-	 */
-	public static double log2(double x) {
-		return Math.log(x)/Math.log(2);
-	}
-	
-	/**
-	 * Calculates the probabilities from frequencies
-	 * 
-	 * @param frequencies The frequencies
-	 * @return The probabilities
-	 */
-	private static double[] getProbabilities(int[] frequencies) {
-		
-		int amountElements=EntropyEstimatorI.getTotal(frequencies);
-		
-		double[] probs=new double[frequencies.length];
-		
-		for (int i=0; i<frequencies.length; i++) {
-			probs[i]= ((double)frequencies[i]) / ((double)amountElements);
-		}
-		
-		return probs;
-	}
-	
-	/**
-	 * Generic function to calculate the Shanon entropy from the frequencies
-	 * 
-	 * @param frequencies The frequencies
-	 * @return Shanon entropy
-	 */
-	public static double getEntropy(int[] frequencies) {
-		
-		double[] probs=EntropyEstimatorI.getProbabilities(frequencies);
-		
-		double entropy=0;
-		
-		for (double prob : probs) {
-			if (prob==0) continue;
-			entropy += prob*EntropyEstimatorI.log2(prob);
-		}
-		
-		return -1 * entropy;
-	}
 }
