@@ -26,10 +26,10 @@ import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import parsing.PasswordFileParser;
 import estimators.MetricEstimatorI;
-import estimators.click.dirik.DirikEstimatorDep;
-import estimators.click.dirik.DirikEstimatorIndep;
+import estimators.click.entropy.ClickEntropyEstimatorDep;
+import estimators.click.entropy.ClickEntropyEstimatorIndep;
 import estimators.click.guesswork.AlphaGuessworkClickEstimator;
-import estimators.text.shay.ShayEstimator;
+import estimators.text.entropy.TextEntropyEstimator;
 
 /**
  * This application provides multiple methods to analyze the password space 
@@ -172,11 +172,11 @@ public final class EnEs {
 	private static MetricEstimatorI<?> checkMethod(String methodArg) {
 		
 		if ( methodArg.equalsIgnoreCase("text_shay" ) ) {
-			return new ShayEstimator();
+			return new TextEntropyEstimator();
 		} else if ( methodArg.equalsIgnoreCase("gp_dirik_dep" ) ) {
-			return new DirikEstimatorDep();
+			return new ClickEntropyEstimatorDep();
 		} else if ( methodArg.equalsIgnoreCase("gp_dirik_indep" ) ) {
-			return new DirikEstimatorIndep();
+			return new ClickEntropyEstimatorIndep();
 		} else if ( methodArg.equalsIgnoreCase("gp_click_guesswork" ) ) {
 			return new AlphaGuessworkClickEstimator();
 		} /*else if ( methodArg.equalsIgnoreCase("gp_chiasson_spatial" ) ) {
