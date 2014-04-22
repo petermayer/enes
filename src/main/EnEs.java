@@ -194,6 +194,7 @@ public final class EnEs {
 		System.out.println("   * text_entropy");
 		System.out.println("   * gp_click_entropy_dep");
 		System.out.println("   * gp_click_entropy_indep");
+		System.out.println("   * gp_click_guesswork");
 		System.out.println("-i Path to password file");
 		System.out.println("-o Path to output file (optional)");
 		System.out.println("-v Enable verbose output (optional, default: print overall entropy estimate only)");
