@@ -83,7 +83,7 @@ public class ShayEstimator extends MetricEstimatorI<String> {
 	private double[] results=new double[11];
 	
 	@Override
-	public double calculateMetric(List<String> passwords, int[] parameters) {
+	public Object calculateMetric(List<String> passwords, int[] parameters) {
 		
 		int maxLength=this.getMaxLength(passwords);
 		
@@ -231,7 +231,7 @@ public class ShayEstimator extends MetricEstimatorI<String> {
 	}
 
 	@Override
-	public void printResult(Writer outWriter) throws IOException {
+	public void verbosePrintResult(Writer outWriter) throws IOException {
 		
 		if ( !calculated ) {
 			System.err.println("Can't print: calculation not finished.");
@@ -344,6 +344,20 @@ public class ShayEstimator extends MetricEstimatorI<String> {
 	@Override
 	public PasswordType getPasswordType() {
 		return PasswordType.TEXT;
+	}
+
+	@Override
+	public void shortPrintRestult(Writer outWriter) throws IOException {
+		
+		if ( !calculated ) {
+			System.err.println("Can't print: calculation not finished.");
+			return;
+		}
+		
+		outWriter.write("Entropy Total: "+CommonHelper.getTotal(results)+"\n");
+		
+		outWriter.close();
+		
 	}
 
 }

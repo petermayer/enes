@@ -190,5 +190,26 @@ class DirikEstimator {
 		return newArray;
 		
 	}
+	
+	public void printSummary(Writer outWriter, boolean dependent) {
+		
+		if ( !calculated ) {
+			System.err.println("Can't print: calculation not finished.");
+			return;
+		}
+		
+		try {
+			double indepOverall=0;
+			for ( int i=0; i<(this.results.length/(int)Math.pow(2, (dependent?1:0))); i++) {
+				if ( dependent ) outWriter.write("Overall entropy: "+this.results[i+this.maxLength]+"\n");
+				else indepOverall += this.results[i];
+			}
+			if ( !dependent ) outWriter.write("Overall entropy: "+indepOverall+"\n");
+			outWriter.close();
+		} catch (IOException e) {
+			System.err.println("Could not write to target output.");
+		}
+		
+	}
 
 }

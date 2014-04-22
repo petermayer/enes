@@ -32,13 +32,13 @@ import estimators.click.ClickPassword;
 public class ChiassonEstimator extends MetricEstimatorI<ClickPassword> {
 
 	@Override
-	public double calculateMetric(List<ClickPassword> passwords, int[] parameters) {
+	public Object calculateMetric(List<ClickPassword> passwords, int[] parameters) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public void printResult(Writer outWriter) throws IOException {
+	public void verbosePrintResult(Writer outWriter) throws IOException {
 		// TODO Auto-generated method stub
 		
 	}
@@ -47,6 +47,12 @@ public class ChiassonEstimator extends MetricEstimatorI<ClickPassword> {
 	public PasswordType getPasswordType() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void shortPrintRestult(Writer outWriter) throws IOException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

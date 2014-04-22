@@ -30,19 +30,29 @@ import main.PasswordType;
 public abstract class MetricEstimatorI<E> {
 	
 	/**
-	 * Calculates an entropy estimate for the specified passwords
+	 * Calculates the metric for the specified passwords. The return value is 
+	 * specific for each estimator and serves mainly the purpose to indicate
+	 * successful computation (non-null value).
 	 * 
 	 * @param passwords The passwords to consider
-	 * @return The entropy estimate
+	 * @return The calculated metric
 	 */
-	public abstract double calculateMetric(List<E> passwords, int[] parameters);
+	public abstract Object calculateMetric(List<E> passwords, int[] parameters);
 	
 	/**
-	 * Prints the result of the entropy estimation
+	 * Prints the result of the metric estimator in verbose mode
 	 * 
 	 * @param outWriter The sink to write the results to
 	 */
-	public abstract void printResult(Writer outWriter) throws IOException;
+	public abstract void verbosePrintResult(Writer outWriter) throws IOException;
+	
+	/**
+	 * Prints the result of the metric estimator as a short summary
+	 * 
+	 * @param outWriter
+	 * @throws IOException
+	 */
+	public abstract void shortPrintRestult(Writer outWriter) throws IOException;
 	
 	/**
 	 * Returns the type of password this estimator is designed for.

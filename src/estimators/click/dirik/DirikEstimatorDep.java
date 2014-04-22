@@ -40,18 +40,23 @@ public class DirikEstimatorDep extends MetricEstimatorI<ClickPassword> {
 	private DirikEstimator estimator=new DirikEstimator();
 	
 	@Override
-	public double calculateMetric(List<ClickPassword> passwords, int[] parameters) {
+	public Object calculateMetric(List<ClickPassword> passwords, int[] parameters) {
 		return this.estimator.calculateEstimate(passwords, parameters, true);
 	}
 
 	@Override
-	public void printResult(Writer outWriter) throws IOException {
+	public void verbosePrintResult(Writer outWriter) throws IOException {
 		this.estimator.printResult(outWriter, true);
 	}
 
 	@Override
 	public PasswordType getPasswordType() {
 		return PasswordType.GRAPHICAL_CLICK;
+	}
+
+	@Override
+	public void shortPrintRestult(Writer outWriter) throws IOException {
+		this.estimator.printSummary(outWriter, true);
 	}
 
 }

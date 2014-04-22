@@ -28,6 +28,7 @@ import parsing.PasswordFileParser;
 import estimators.MetricEstimatorI;
 import estimators.click.dirik.DirikEstimatorDep;
 import estimators.click.dirik.DirikEstimatorIndep;
+import estimators.click.guesswork.AlphaGuessworkClickEstimator;
 import estimators.text.shay.ShayEstimator;
 
 /**
@@ -114,7 +115,7 @@ public final class EnEs {
 		 * class. The fourth step is included in the try-block for simplicity's sake.
 		 */
 		PasswordFileParser parser;
-		double estimate=-1;
+		Object estimate=null;
 		try {
 			parser=new PasswordFileParser((String)os.valueOf("i"));
 			
@@ -141,7 +142,7 @@ public final class EnEs {
 		 * 5. Create output
 		 */
 		//This should never apply, but for safety we check whether the estimation actually happened
-		if ( estimate == -1 ) {
+		if ( estimate == null ) {
 			System.err.println("Whoops, well this is embarrassing... It seems you managed to outwit the parser and the estimator! Please contact the developer with information on how you managed to do this.");
 			System.exit(1);
 		}
@@ -156,12 +157,8 @@ public final class EnEs {
 				}
 			}
 		}
-		if ( os.has("v") ) estimator.printResult(new BufferedWriter(writer));
-		else {
-			BufferedWriter bw=new BufferedWriter(writer);
-			bw.write(""+estimate);
-			bw.close();
-		}
+		if ( os.has("v") ) estimator.verbosePrintResult(new BufferedWriter(writer));
+		else estimator.shortPrintRestult(new BufferedWriter(writer));
 		
 	}
 	
@@ -180,6 +177,8 @@ public final class EnEs {
 			return new DirikEstimatorDep();
 		} else if ( methodArg.equalsIgnoreCase("gp_dirik_indep" ) ) {
 			return new DirikEstimatorIndep();
+		} else if ( methodArg.equalsIgnoreCase("gp_click_guesswork" ) ) {
+			return new AlphaGuessworkClickEstimator();
 		} /*else if ( methodArg.equalsIgnoreCase("gp_chiasson_spatial" ) ) {
 			return new ChiassonEstimator();
 		} */else return null;
