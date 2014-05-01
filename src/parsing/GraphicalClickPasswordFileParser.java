@@ -45,7 +45,7 @@ public class GraphicalClickPasswordFileParser implements PasswordFileParserI<Cli
 	 *  1: y-max
 	 *  2: tolerance
 	 */
-	int[] parameters;
+	private int[] parameters;
 	
 	@Override
 	public PasswordType getPasswordType() {
@@ -73,9 +73,6 @@ public class GraphicalClickPasswordFileParser implements PasswordFileParserI<Cli
 		 * The passwords need to be parsable by "parseClickPassword" and they
 		 * must lie within the canvas. Currently only the first password is
 		 * checked at this point.
-		 * 
-		 * Doing all this with exceptions is not very good style and changing
-		 * it is on the list for future versions.
 		 */
 		try {
 			//if the type is actually correct we can store the parameters directly, if not we will set them to null

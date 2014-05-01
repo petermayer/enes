@@ -211,7 +211,7 @@ public final class PasswordFileParser {
 		
 		/**
 		 * This function should return the configuration parameters specific for
-		 * the type of password. Currently only numeric (integer) paramters are 
+		 * the type of password. Currently only numeric (integer) parameters are 
 		 * supported.
 		 * 
 		 * @return The parameters for the password set 
