@@ -30,7 +30,7 @@ import estimators.MetricEstimatorI;
 import estimators.ShannonEntropyHelper;
 
 /**
- * This class provides an estimator for the entropy among a password set
+ * This class provides an estimator for the entropy among a password list
  * according to the methodology of Shay et al. [1]. It calculates the
  * Shanon entropy originating from the length of the passwords and for
  * each type of character (digits, symbols, upper case letters, lower

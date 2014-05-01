@@ -107,7 +107,7 @@ public class GraphicalCognometricFileParser implements PasswordFileParserI<Cogno
 	
 	/**
 	 * Converts an array of Strings into an array of Integer primitives
-	 * TODO This one is an exact duplicate and needs to be removed
+	 * TODO This method is an exact duplicate and needs to be removed
 	 * 
 	 * @param a The array to convert
 	 * @return The new array with the converted values

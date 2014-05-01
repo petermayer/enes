@@ -17,6 +17,7 @@
 package main.passwords;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class serves as representation for cognometric graphical passwords
@@ -65,6 +66,24 @@ public class CognometricGroupedPassword {
 	 */
 	public int length() {
 		return this.elements.size();
+	}
+
+	/**
+	 * Determines the length of the longest password in a list of cognometric 
+	 * grouped passwords
+	 * 
+	 * @param passwords The list of passwords
+	 * @return The length of the longest password in the list
+	 */
+	public static int getMaxLength(List<CognometricGroupedPassword> passwords) {
+		
+		int max=0;
+		
+		for ( CognometricGroupedPassword pw : passwords ) {
+			if ( pw.length()>max ) max=pw.length();
+		}
+		
+		return max;
 	}
 	
 }
