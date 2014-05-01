@@ -19,7 +19,7 @@ package parsing;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.PasswordType;
+import main.passwords.PasswordType;
 import parsing.PasswordFileParser.PasswordFileParserI;
 
 /**

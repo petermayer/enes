@@ -21,10 +21,10 @@ import java.io.Writer;
 import java.util.Arrays;
 import java.util.List;
 
-import main.PasswordType;
+import main.passwords.ClickPassword;
+import main.passwords.PasswordType;
 import estimators.GuessworkHelper;
 import estimators.MetricEstimatorI;
-import estimators.click.ClickPassword;
 
 /**
  * This provides an estimator for the alpha-guesswork metric according to 

@@ -23,7 +23,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.PasswordType;
+import main.passwords.PasswordType;
 
 /**
  * This class provides parsing functionality for the different kinds of password

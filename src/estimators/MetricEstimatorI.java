@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 
-import main.PasswordType;
+import main.passwords.PasswordType;
 
 /**
  * Interface for the different metrics' estimators.

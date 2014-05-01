@@ -20,9 +20,9 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 
-import main.PasswordType;
+import main.passwords.ClickPassword;
+import main.passwords.PasswordType;
 import estimators.MetricEstimatorI;
-import estimators.click.ClickPassword;
 /**
  * This class provides a wrapper for the estimation method implemented in DirikEstimator
  * for passwords with independent click-points (i.e. created on different images). Such

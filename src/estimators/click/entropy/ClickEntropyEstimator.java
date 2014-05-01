@@ -20,9 +20,9 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 
+import main.passwords.ClickPassword;
 import estimators.CommonHelper;
 import estimators.ShannonEntropyHelper;
-import estimators.click.ClickPassword;
 
 /**
  * This class provides an estimator for the entropy among a password set

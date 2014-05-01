@@ -21,7 +21,7 @@ import java.io.Writer;
 import java.util.Hashtable;
 import java.util.List;
 
-import main.PasswordType;
+import main.passwords.PasswordType;
 
 import org.apache.commons.lang3.ArrayUtils;
 

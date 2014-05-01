@@ -19,8 +19,8 @@ package parsing;
 import java.util.ArrayList;
 import java.util.List;
 
-import estimators.click.ClickPassword;
-import main.PasswordType;
+import main.passwords.ClickPassword;
+import main.passwords.PasswordType;
 import parsing.PasswordFileParser.PasswordFileParserI;
 
 /**

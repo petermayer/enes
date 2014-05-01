@@ -16,7 +16,7 @@
  *=========================================================================*/
 package estimators.click.spatial;
 
-import estimators.click.ClickPassword;
+import main.passwords.ClickPassword;
 
 /**
  * This class provides a factory of the point pattern type ppp for use with the R package
