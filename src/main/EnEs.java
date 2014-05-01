@@ -28,7 +28,7 @@ import parsing.PasswordFileParser;
 import estimators.MetricEstimatorI;
 import estimators.click.entropy.ClickEntropyEstimatorDep;
 import estimators.click.entropy.ClickEntropyEstimatorIndep;
-import estimators.click.guesswork.AlphaGuessworkClickEstimator;
+import estimators.click.guesswork.ClickAlphaGuessworkEstimator;
 import estimators.text.entropy.TextEntropyEstimator;
 
 /**
@@ -178,7 +178,7 @@ public final class EnEs {
 		} else if ( methodArg.equalsIgnoreCase("gp_click_entropy_indep" ) ) {
 			return new ClickEntropyEstimatorIndep();
 		} else if ( methodArg.equalsIgnoreCase("gp_click_guesswork" ) ) {
-			return new AlphaGuessworkClickEstimator();
+			return new ClickAlphaGuessworkEstimator();
 		} /*else if ( methodArg.equalsIgnoreCase("gp_chiasson_spatial" ) ) {
 			return new ChiassonEstimator();
 		} */else return null;

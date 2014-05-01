@@ -43,7 +43,7 @@ import estimators.MetricEstimatorI;
  * 
  * @author Peter Mayer | peter.mayer@cased.de
  */
-public class AlphaGuessworkClickEstimator extends MetricEstimatorI<ClickPassword> {
+public class ClickAlphaGuessworkEstimator extends MetricEstimatorI<ClickPassword> {
 
 	/**
 	 * In this array the alpha-guesswork values are stored 
