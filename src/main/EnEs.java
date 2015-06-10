@@ -85,10 +85,13 @@ public final class EnEs {
 		/*
 		 * 1. Check whether arguments present
 		 */
-		OptionSet os=(new OptionParser("hm::i::vo::")).parse(args);
+		OptionSet os=(new OptionParser("hm::i::vo::l")).parse(args);
 		
 		if ( os.has("h") ) {
 			EnEs.printHelp();
+			System.exit(0);
+		} else if ( os.has("l") ) {
+			EnEs.printLicenseInformation();
 			System.exit(0);
 		} else if ( !os.has("m") || !os.hasArgument("m") ) {
 			System.err.println("No estimation method specified.");
@@ -200,6 +203,16 @@ public final class EnEs {
 		System.out.println("-i Path to password file");
 		System.out.println("-o Path to output file (optional)");
 		System.out.println("-v Enable verbose output (optional, default: print overall entropy estimate only)");
+		System.out.println("-h Print this help text");
+		System.out.println("-l Print the license information");
+	}
+	
+	/**
+	 * Print the license information
+	 */
+	private static void printLicenseInformation() {
+		System.out.println("EnEs  Copyright (C) 2013  Peter Mayer");
+	    System.out.println("This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions. For detailed information visit <https://www.gnu.org/licenses/gpl-3.0>");		
 	}
 
 }
