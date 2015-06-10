@@ -27,7 +27,7 @@ import parsing.PasswordFileParser.PasswordFileParserI;
 
 /**
  * This class provides functions for parsing password files of graphical 
- * click-based passwords.The password file is expected to be UTF-8 encoded 
+ * click-based passwords. The password file is expected to be UTF-8 encoded
  * and to contain one password in each line, where the format is: 
  * "x1,y2;x2,y2;...;xn,yn" (without quotation marks) for n click-points. 
  * Currently only integer values are supported for the coordinates. The 

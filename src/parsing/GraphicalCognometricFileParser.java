@@ -27,7 +27,7 @@ import parsing.PasswordFileParser.PasswordFileParserI;
 
 /**
  * This class provides functions for parsing password files of graphical 
- * cognometric semantically grouped passwords.The password file is expected 
+ * cognometric semantically grouped passwords. The password file is expected
  * to be UTF-8 encoded and to contain one password in each line, where the
  * format is: "g1,e2;g2,e2;...;gn,en" (without quotation marks) for a password
  * of length n. The first line of the file has to contain two values: i) the 
