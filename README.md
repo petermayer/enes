@@ -9,6 +9,27 @@ This application is a little tool for password security analysis. It can be used
 	* Shanon entropy - Dirik et al. [2]
 	* α-guesswork - Bonneau [3]
 
+Usage Instructions
+------------------
+To use EnEs simply build a jar-file using your favorite IDE and run the program as follows:
+
+```
+java -jar enes.jar -m <estimation method> -i <password file> [-o <output file>] [-v]
+```
+
+```-m``` Estimation method to use. The naming scheme for methods is ```<password type>[_<password subtype>]_<metric>[_<submetric>]```. For example, to estimate the entropy for a set of click-based graphical passwords where the choice of click-points can be assumed to be independent from one another the respective method is ```gp_click_entropy_indep```. The available methods are: text_entropy, gp_click_entropy_dep, gp_click_entropy_indep, gp_click_guesswork.
+	
+```-i``` Path to password file
+
+```-o``` Path to output file (optional)
+
+```-v``` Enable verbose output (optional, default: print overall entropy estimate only)
+
+```-h``` Print this text
+
+```-l``` Print the license information
+
+
 References
 ----------
 
