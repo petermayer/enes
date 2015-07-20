@@ -23,9 +23,9 @@ To use EnEs simply build a jar-file using your favorite IDE and run the program 
 
 `-v` Enable verbose output (optional, default: print overall entropy estimate only)
 
-`-h` Print this text
+`-h` Print help text
 
-`-l` Print the license information
+`-l` Print license information
 
 
 References
